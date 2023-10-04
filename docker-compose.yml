@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: uvicorn downloader.api:app --host 0.0.0.0
+    ports:
+      - "8080:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - worker
+
+  worker:
+    build: .
+    command: celery -A downloader.tasks worker --concurrency=5 --loglevel=info
+    environment:
+      - PUSHOVER_USER
+      - PUSHOVER_TOKEN
+    volumes:
+      - .:/app
+      - /path/to/storage:/storage
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.2-alpine
