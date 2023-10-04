@@ -7,18 +7,13 @@ LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "file": {
-            "level": "INFO",
-            "class": "logging.handlers.TimedRotatingFileHandler",
-            "filename": "./logs/app.log",
-            "when": "midnight",
-            "interval": 1,
-            "backupCount": 2,
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
     "loggers": {
         "": {
-            "handlers": ["file"],
+            "handlers": ["console"],
             "level": "INFO",
             "propagate": True,
         },
