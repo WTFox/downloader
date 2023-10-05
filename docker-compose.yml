@@ -16,11 +16,11 @@ services:
     build: .
     command: celery -A downloader.tasks worker --concurrency=5 --loglevel=info
     environment:
-      - PUSHOVER_USER
-      - PUSHOVER_TOKEN
+      - PUSHOVER_USER=xxx # remove the environment section if you
+      - PUSHOVER_TOKEN=xxx # don't have pushover creds
     volumes:
       - .:/app
-      - /path/to/storage:/storage
+      - /path/to/storage:/storage # /path/to/storage will be the path to where you want to store videos
     depends_on:
       - redis
 
