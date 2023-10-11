@@ -27,6 +27,6 @@ def test__yt_dlp_audio_cmd():
         "--audio-format",
         "mp3",
         "-o",
-        f"/storage/{c.YT_DLP_FILENAME_TEMPLATE}",
+        f"/storage/{c.YT_DLP_FILENAME_TEMPLATE}/audio",
         TEST_URL,
     ]
