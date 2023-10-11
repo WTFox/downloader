@@ -29,7 +29,7 @@ class Constants:
             "--audio-format",
             "mp3",
             "-o",
-            f"/storage/{self.YT_DLP_FILENAME_TEMPLATE}/audio",
+            f"/storage/audio/{self.YT_DLP_FILENAME_TEMPLATE}",
             url,
         ]
 
