@@ -29,15 +29,15 @@ def download_audio(url: str):
 def download(url: str, cmd: List[str], media_type: str):
     msg = notify_msg_from_url(url)
     notify(title=f"Downloader [{media_type}]", message=msg)
-    log.info("Running command: %s", " ".join(cmd))
+    log.info("Running command [%s]: %s", media_type, " ".join(cmd))
     ret = subprocess.call(cmd)
     if ret != 0:
-        log.error("Failed to download %s", url)
-        notify(f"Failed to download {url}")
+        log.error("Failed to download [%s] %s", media_type, url)
+        notify(title=f"Downloader [{media_type}]", message=f"Failed to download {url}")
         return
 
-    log.info("Finished downloading %s", url)
-    notify(f"Finished downloading {url}")
+    log.info("Finished downloading [%s] %s", media_type, url)
+    notify(title=f"Downloader [{media_type}]", message=f"Finished downloading {url}")
 
 
 def notify_msg_from_url(url: str):
