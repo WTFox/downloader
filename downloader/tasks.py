@@ -17,18 +17,18 @@ worker = Celery(__name__, broker="redis://redis:6379/0")
 @worker.task
 def download_video(url: str):
     cmd = c.yt_dlp_video_cmd(url)
-    download(url, cmd)
+    download(url, cmd, "Video")
 
 
 @worker.task
 def download_audio(url: str):
     cmd = c.yt_dlp_audio_cmd(url)
-    download(url, cmd)
+    download(url, cmd, "Audio")
 
 
-def download(url: str, cmd: List[str]):
+def download(url: str, cmd: List[str], media_type: str):
     msg = notify_msg_from_url(url)
-    notify(msg)
+    notify(title=f"Downloader [{media_type}]", message=msg)
     log.info("Running command: %s", " ".join(cmd))
     ret = subprocess.call(cmd)
     if ret != 0:
@@ -42,10 +42,10 @@ def download(url: str, cmd: List[str]):
 
 def notify_msg_from_url(url: str):
     try:
-        log.info("Getting video info for %s", url)
+        log.info("Getting info for %s", url)
         video_info = YoutubeDL().extract_info(url, download=False)
         if video_info is None:
-            raise DownloadError("No video info")
+            raise DownloadError("No info")
 
         fulltitle, channel, duration_string, extractor_key = (
             video_info.get("fulltitle"),
