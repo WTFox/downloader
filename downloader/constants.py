@@ -15,6 +15,8 @@ class Constants:
             "mp4",
             "-o",
             f"/storage/{self.YT_DLP_FILENAME_TEMPLATE}",
+            "--concurrent-fragments",
+            "4",
             url,
         ]
 

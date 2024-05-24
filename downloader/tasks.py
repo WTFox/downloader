@@ -54,7 +54,9 @@ def notify_msg_from_url(url: str):
             video_info.get("extractor_key"),
         )
         msg = f"[{extractor_key}]: {channel}: {fulltitle}\n{duration_string}\n{url}"
+
     except DownloadError as e:
         log.error("Failed to get video info: %s", e)
         msg = url
+
     return msg

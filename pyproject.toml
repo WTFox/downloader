@@ -12,7 +12,7 @@ uvicorn = "0.15.0"
 celery = "5.2.2"
 redis = "4.0.2"
 requests = "2.31.0"
-yt-dlp = "2024.03.10"
+yt-dlp = "2024.4.9"
 structlog = "^23.1.0"
 
 [tool.poetry.group.dev.dependencies]
