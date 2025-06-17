@@ -20,7 +20,7 @@ services:
       - PUSHOVER_TOKEN=xxx # don't have pushover creds
     volumes:
       - .:/app
-      - /path/to/storage:/storage # /path/to/storage will be the path to where you want to store videos
+      - /Volumes/Goodz:/Goodz
     depends_on:
       - redis
 

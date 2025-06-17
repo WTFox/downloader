@@ -15,6 +15,8 @@ class Constants:
 
         return [
             "yt-dlp",
+            "--cookies",
+            "/Goodz/Misc/cookies.txt",
             "-f",
             "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
             "--merge-output-format",
@@ -34,6 +36,8 @@ class Constants:
 
         return [
             "yt-dlp",
+            "--cookies",
+            "/Goodz/Misc/cookies.txt",
             "--extract-audio",
             "--audio-format",
             "mp3",
