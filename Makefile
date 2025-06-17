@@ -11,6 +11,9 @@ setup-builder:
 build: setup-builder
 	docker buildx build --platform linux/amd64,linux/arm64 --builder $(BUILDER_NAME) -t $(USERNAME)/$(IMAGE_NAME):$(VERSION) .
 
+update:
+	poetry update
+
 publish: build
 	docker buildx build --platform linux/amd64,linux/arm64 --builder $(BUILDER_NAME) -t $(USERNAME)/$(IMAGE_NAME):$(VERSION) --push .
 
