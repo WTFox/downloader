@@ -8,8 +8,8 @@ from yt_dlp.utils import DownloadError
 
 from downloader.constants import constants as c
 from downloader.logging.config import *  # noqa
-from downloader.types import Download
 from downloader.pushover import notify
+from downloader.types import Download
 
 log = get_logger(__name__)
 worker = Celery(__name__, broker="redis://redis:6379/0")
@@ -44,7 +44,9 @@ def download(url: str, cmd: T.List[str], media_type: str):
 def notify_msg_from_url(url: str):
     try:
         log.info("Getting info for %s", url)
-        video_info = YoutubeDL().extract_info(url, download=False)
+        video_info = YoutubeDL({"cookiefile": "/Goodz/Misc/cookies.txt"}).extract_info(
+            url, download=False
+        )
         if video_info is None:
             raise DownloadError("No info")
 
