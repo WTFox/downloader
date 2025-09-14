@@ -1,3 +1,4 @@
+import structlog
 from fastapi import FastAPI, HTTPException
 from structlog import get_logger
 
@@ -5,7 +6,7 @@ from downloader.logging.config import *  # noqa
 from downloader.tasks import download_audio, download_video
 from downloader.types import Download
 
-log = get_logger(__name__)
+log: structlog.stdlib.BoundLogger = get_logger(__name__)
 app = FastAPI(docs_url=None, redoc_url=None)
 
 
@@ -15,7 +16,7 @@ async def video(item: Download):
         raise HTTPException(status_code=400, detail="URL is required")
 
     log.info("Queued video", url=item.url, path=item.path)
-    _ = download_video.delay(item.dict())
+    download_video.delay(item.dict())
     return {"status": "queued video"}
 
 
@@ -25,5 +26,5 @@ async def audio(item: Download):
         raise HTTPException(status_code=400, detail="URL is required")
 
     log.info("Queued audio", url=item.url, path=item.path)
-    _ = download_audio.delay(item.dict())
+    download_audio.delay(item.dict())
     return {"status": "queued audio"}

@@ -1,11 +1,12 @@
 import os
 
 import requests
+import structlog
 from structlog import get_logger
 
 from downloader.constants import Constants as c
 
-log = get_logger(__name__)
+log: structlog.stdlib.BoundLogger = get_logger(__name__)
 
 
 def notify(message: str, title="Downloader", user=None, token=None, post=requests.post):

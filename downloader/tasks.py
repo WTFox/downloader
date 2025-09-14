@@ -1,6 +1,6 @@
 import subprocess
-import typing as T
 
+import structlog
 from celery import Celery
 from structlog import get_logger
 from yt_dlp import YoutubeDL
@@ -9,25 +9,24 @@ from yt_dlp.utils import DownloadError
 from downloader.constants import constants as c
 from downloader.logging.config import *  # noqa
 from downloader.pushover import notify
-from downloader.types import Download
 
-log = get_logger(__name__)
+log: structlog.stdlib.BoundLogger = get_logger(__name__)
 worker = Celery(__name__, broker="redis://redis:6379/0")
 
 
 @worker.task
-def download_video(item: T.Dict[str, str]):
+def download_video(item: dict[str, str]):
     cmd = c.yt_dlp_video_cmd(item["url"], item["path"])
     download(item["url"], cmd, "Video")
 
 
 @worker.task
-def download_audio(item: T.Dict[str, str]):
+def download_audio(item: dict[str, str]):
     cmd = c.yt_dlp_audio_cmd(item["url"], item["path"])
     download(item["url"], cmd, "Audio")
 
 
-def download(url: str, cmd: T.List[str], media_type: str):
+def download(url: str, cmd: list[str], media_type: str):
     msg = notify_msg_from_url(url)
     notify(title=f"Downloader [{media_type}]", message=msg)
     log.info("Running command [%s]: %s", media_type, " ".join(cmd))
