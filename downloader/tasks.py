@@ -44,7 +44,8 @@ def notify_msg_from_url(url: str):
     try:
         log.info("Getting info for %s", url)
         video_info = YoutubeDL({"cookiefile": "/Goodz/Misc/cookies.txt"}).extract_info(
-            url, download=False
+            url,
+            download=False,  # type: ignore
         )
         if video_info is None:
             raise DownloadError("No info")
