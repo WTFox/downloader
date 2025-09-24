@@ -1,7 +1,11 @@
 FROM python:3.11
 
 RUN apt-get update && \
-  apt-get install -y -q --no-install-recommends ffmpeg
+  apt-get install -y -q --no-install-recommends ffmpeg curl unzip
+
+# Install Deno
+RUN curl -fsSL https://deno.land/install.sh | sh
+ENV PATH="/root/.deno/bin:$PATH"
 
 RUN python -m ensurepip --upgrade
 
