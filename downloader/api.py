@@ -15,8 +15,8 @@ async def video(item: Download):
     if not item.url:
         raise HTTPException(status_code=400, detail="URL is required")
 
-    log.info("Queued video", url=item.url, path=item.path)
     download_video.delay(item.dict())
+    log.info("Queued video", url=item.url, path=item.path)
     return {"status": "queued video"}
 
 
@@ -25,6 +25,18 @@ async def audio(item: Download):
     if not item.url:
         raise HTTPException(status_code=400, detail="URL is required")
 
-    log.info("Queued audio", url=item.url, path=item.path)
     download_audio.delay(item.dict())
+    log.info("Queued audio", url=item.url, path=item.path)
     return {"status": "queued audio"}
+
+
+@app.post("/both")
+async def both(item: Download):
+    if not item.url:
+        raise HTTPException(status_code=400, detail="URL is required")
+
+    download_video.delay(item.dict())
+    log.info("Queued video", url=item.url, path=item.path)
+    download_audio.delay(item.dict())
+    log.info("Queued audio", url=item.url, path=item.path)
+    return {"status": "queued both"}
