@@ -18,6 +18,7 @@ services:
     environment:
       - PUSHOVER_USER=xxx # remove the environment section if you
       - PUSHOVER_TOKEN=xxx # don't have pushover creds
+      - REDIS_HOST=${REDIS_HOST}
     volumes:
       - .:/app
       - /Volumes/Goodz:/Goodz

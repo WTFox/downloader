@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 import structlog
@@ -11,7 +12,7 @@ from downloader.logging.config import *  # noqa
 from downloader.pushover import notify
 
 log: structlog.stdlib.BoundLogger = get_logger(__name__)
-worker = Celery(__name__, broker="redis://redis:6379/0")
+worker = Celery(__name__, broker=f"redis://{os.getenv("REDIS_HOST")}:6379/0")
 
 
 @worker.task
